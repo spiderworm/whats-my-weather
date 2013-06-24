@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+<title>What's My Weather?</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<link rel="stylesheet" href="style/themes/one.css">
+
+<script src="js/require.js"></script>
+
+<script>
+	requirejs.config({
+		baseUrl: './js/'
+	});
+
+	define(
+		'config',
+		function() {
+
+			var config = {
+				keys: {
+					worldWeatherOnline: '',
+					weatherUnderground: '',
+					google: ''
+				}
+			};
+
+			var req = new XMLHttpRequest();
+			req.open('GET','./config.json',false);
+			req.send();
+
+			if(req.responseText) {
+				try {
+					config = JSON.parse(req.responseText);
+				} catch(e) {
+					console.error('unable to understand config response, config may be broken');
+					console.error(e);
+				}
+			} else {
+				console.error('no config.json file found, config may be broken');
+			}
+
+			return config;
+		}
+	);
+
+	require(
+		['config'],
+		function(config) {
+
+			define(
+				'google-apis',
+				['async!https://maps.googleapis.com/maps/api/js?key=' + config.keys.google + '&sensor=false&libraries=weather'],
+				function() {
+
+					return window.google;
+
+				}
+			);
+
+		}
+	);
+
+</script>
+
+</head>
+<body>
+
+	<main>
+
+		<header>
+			<h1>What's My Weather?</h1>
+			<p>Discover what it's like where you are or where you're going!</p>
+		</header>
+		
+		<script>
+		
+			require(
+				['UserLocation','LocationForm','LocationMap','FiveDayForecastDisplay'],
+				function(UserLocation,LocationForm,LocationMap,FiveDayForecastDisplay) {
+
+					var main = document.querySelector('main');
+
+					var userLocation = new UserLocation();
+
+					var locationForm = new LocationForm(userLocation);
+					main.appendChild(locationForm.getElement());
+
+					var map = new LocationMap(userLocation);
+					main.appendChild(map.getElement());
+
+					var forecast = new FiveDayForecastDisplay(userLocation);
+					main.appendChild(forecast.getElement());
+
+				}
+			);
+
+		</script>
+	
+	
+	</main>
+
+
+</body>
+</html>

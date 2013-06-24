@@ -1,0 +1,299 @@
+@import url('one/loading-animation.css');
+
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	position: relative;
+	min-height: 100%;
+	min-width: 24cm	;
+	overflow: hidden;	
+
+	color: white;
+	background-color: black;
+
+	font-family: Arial, sans-serif;
+}
+
+button {
+	background-color: #333;
+	color: white;
+	border: .1cm solid black;
+	border-radius: .2cm;
+	padding: .2cm;
+}
+
+button[type="reset"] {
+	background-color: #222;
+	color: #888;
+}
+
+main {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+main h1 {
+	margin: 0;
+}
+
+main > * {
+	position: relative;
+	z-index: 2;
+	background-color: rgba(0,0,0,.9);
+	color: white;
+
+	padding: 1px 1cm;
+}
+
+main > header {
+	padding-top: .5cm;
+	height: 2.5cm;
+	z-index: 3;
+}
+
+main > .location-form-section {
+	position: absolute;
+	top: -14.5cm;
+	right: 1cm;
+	width: 8cm;
+	height: 4.5cm;
+	z-index: 4;
+
+	text-align: center;
+
+	background-color: #600;
+	padding: 9.5cm 1cm 1cm;
+	opacity: .75;
+
+	-webkit-transition: all .25s ease-in-out;
+	-moz-transition: all .25s ease-in-out;
+	-ms-transition: all .25s ease-in-out;
+	-o-transition: all .25s ease-in-out;
+	transition: all .25s ease-in-out;
+}
+
+main > .location-form-section:hover,
+main > header:hover ~ .location-form-section {
+	top: -7cm;
+	opacity: 1;
+}
+
+main > .location-form-section:after {
+	position: absolute;
+	left: .5cm;
+	right: .5cm;
+	bottom: .25cm;
+
+	display: block;
+	content: " ";
+	border-bottom: .05cm dashed #a99;
+}
+
+.location-form-section > h1 {
+	margin-bottom: .5cm;
+}
+
+.location-form-section form > * {
+	display: inline-block;
+	vertical-align: middle;
+	margin: .25cm .5cm .25cm 0;
+}
+
+.location-form-section form > .form-buttons {
+	float: right;
+	position: relative;
+	bottom: .25cm;
+}
+
+.location-form-section form:after {
+	content: " ";
+	clear: both;
+	display: block;
+}
+
+main > .location-map-section {
+	position: absolute;
+	top: 3cm;
+	left: 0;
+	bottom: 3cm;
+	right: 0;
+	z-index: 1;
+}
+
+main > .location-map-section .map {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	-webkit-box-reflect: below;
+}
+
+main > .five-day-forecast-section {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 3cm;
+
+	padding: 0;
+	z-index: 4;
+	background-color: transparent;
+}
+
+main > .five-day-forecast-section > h1 {
+	position: absolute;
+	top: -99999cm;
+	left: -99999cm;
+}
+
+main > .five-day-forecast-section .loading {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -10px;
+}
+
+main > .five-day-forecast-section .loading:before {
+	content: " ";
+
+	position: absolute;
+	top: 50%;
+	left: 50%;
+
+	width: .25cm;
+	height: .25cm;
+
+	margin-top: 0cm;
+	margin-left: -1.125cm;
+
+	background-color: rgba(255,255,255,.5);
+	border-radius: 50%;
+
+	-webkit-animation: loading .7s infinite;
+	-webkit-animation-timing-function: linear;
+
+	-webkit-transform-origin: 1cm 0;
+}
+
+.five-day-forecast-section > .update-button {
+	position: absolute;
+	left: 0;
+	bottom: .5cm;
+	width: 100%;
+	visibility: hidden;
+	border-radius: 0;
+	opacity: 0;
+
+	-webkit-transition: opacity .25s ease-in-out .5s;
+}
+
+.five-day-forecast-section:hover .update-button {
+	visibility: visible;
+	opacity: 1;
+}
+
+
+
+
+
+.forecasts {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	min-height: 2cm;
+
+	background-color: rgba(0,0,0,.9);
+
+	white-space: nowrap;
+	
+	overflow: auto;
+}
+
+.forecasts > .forecast {
+	display: inline-block;
+	height: 2cm;
+	overflow: hidden;
+	min-width: 4cm;
+	margin: 0 0 .25cm 0;
+
+	-webkit-transition: height .25s ease-in-out;
+	-moz-transition: height .25s ease-in-out;
+	-ms-transition: height .25s ease-in-out;
+	-o-transition: height .25s ease-in-out;
+	transition: height .25s ease-in-out;
+}
+
+.five-day-forecast-section:hover .forecasts > .forecast {
+	height: 7cm;
+}
+
+.forecast:hover {
+	background-color: black;
+}
+
+.forecast {
+	padding: 0 .5cm .25cm;
+}
+
+.forecast > h1 {
+	background-color: black;
+	color: white;
+	margin: 0 -.5cm .1cm;
+	padding: .1cm .5cm .1cm;
+	font-size: 0;
+	font-weight: normal;
+}
+
+.forecast > h1 .day {
+	display: block;
+	font-size: .55cm;
+	font-weight: bold;
+}
+
+.forecasts .forecast > h1 .date,
+.forecasts .forecast > h1 .month {
+	opacity: 0;
+	margin-right: .25cm;
+	-webkit-transition: opacity .5s ease-in-out .15s;
+	-moz-transition: opacity .5s ease-in-out .15s;
+	-ms-transition: opacity .5s ease-in-out .15s;
+	-o-transition: opacity .5s ease-in-out .15s;
+	transition: opacity .5s ease-in-out .15s;
+}
+
+.five-day-forecast-section:hover .forecasts .forecast > h1 .date,
+.five-day-forecast-section:hover .forecasts .forecast > h1 .month {
+	font-size: .55cm;
+	opacity: 1;
+}
+
+.forecast .temperatures,
+.forecast img {
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: .25cm;
+}
+
+.forecast .temperatures .high {
+	font-weight: bold;
+	font-size: .65cm;
+}
+
+.forecast .description {
+	opacity: 0;
+}
+
+.five-day-forecast-section .forecast .description {
+	opacity: 1;
+}
+
